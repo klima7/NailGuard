@@ -8,7 +8,12 @@ from nailguard.alerts import Alert
 
 class Nailguard:
     
-    def __init__(self, camera_idx: int, detectors: list[Detector], alerts: list[Alert]) -> None:
+    def __init__(
+        self,
+        camera_idx: int,
+        detectors: list[Detector],
+        alerts: list[Alert]
+    ) -> None:
         self.camera_idx = camera_idx
         self.detectors = detectors
         self.alerts = alerts
