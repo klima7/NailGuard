@@ -15,7 +15,7 @@ numpy = "<2"
 click = "^8.1.7"
 
 [tool.poetry.scripts]
-nailguard = "nailguard.nailguard:main"
+nailguard = "nailguard.main:main"
 
 [build-system]
 requires = ["poetry-core"]

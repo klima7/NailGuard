@@ -8,7 +8,8 @@ from nailguard.alerts import get_alerts_names, get_alert
 @click.option(
     '--detector',
     type=click.Choice(get_detectors_names()),
-    default="mediapipe",
+    multiple=True,
+    default=["mediapipe"],
     help='Detector to use'
 )
 @click.option(
@@ -21,7 +22,5 @@ from nailguard.alerts import get_alerts_names, get_alert
 def main(detector: str, alert: list[str]):
     """Nailguard launcher"""
     
-    print(detector, alert)
-    
-    detector = get_detector(detector)
+    detectors = [get_detector(detector) for detector in detector]
     alerts = [get_alert(alert) for alert in alert]
