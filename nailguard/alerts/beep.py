@@ -1,7 +1,7 @@
 from pathlib import Path
 from time import sleep
 
-from beepy import beep
+import pygame
 
 from .base import Alert
 
@@ -9,8 +9,10 @@ from .base import Alert
 class BeepAlert(Alert):
     
     def __init__(self):
-        self.icon_path = str(Path(__file__).parent.parent / "assets" / "stop.png")
+        pygame.mixer.init()
+        sound_path = str(Path(__file__).parent.parent / "assets" / "error.wav")
+        self.sound = pygame.mixer.Sound(sound_path)
     
     def fire(self):
-        beep(3)
-        sleep(0.5)
+        self.sound.play()
+        sleep(1.0)
