@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "nailguard"
+version = "0.1.0"
+description = "Making sure you don't bite your nails"
+authors = ["klima7 <github@mail.ukasz.com>"]
+readme = "README.md"
+package-mode = true
+
+[tool.poetry.dependencies]
+python = "^3.10"
+mediapipe = "^0.10.15"
+opencv-python = "^4.10.0.84"
+pillow = "^11.0.0"
+numpy = "<2"
+click = "^8.1.7"
+
+[tool.poetry.scripts]
+nailguard = "nailguard.nailguard:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
