@@ -8,19 +8,23 @@ from nailguard.alerts import Alert
 
 class Nailguard:
     
-    def __init__(self, detectors: list[Detector], alerts: list[Alert]) -> None:
+    def __init__(self, camera_idx: int, detectors: list[Detector], alerts: list[Alert]) -> None:
+        self.camera_idx = camera_idx
+        self.detectors = detectors
+        self.alerts = alerts
+        
         self.image = None
         self.bite_statuses = {detector: False for detector in detectors}
     
     def run(self) -> None:
         threading.Thread(target=self._image_thread, args=(self,)).start()
         
-        for detector in self.bite_statuses.keys():
+        for detector in self.detectors:
             threading.Thread(target=self._detector_thread, args=(self, detector)).start()
 
     @staticmethod
     def _image_thread(nailguard) -> None:
-        cap = cv2.VideoCapture(0)
+        cap = cv2.VideoCapture(nailguard.camera_idx)
         while True:
             ret, image = cap.read()
             if not ret:

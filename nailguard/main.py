@@ -20,9 +20,15 @@ from nailguard.nailguard import Nailguard
     default=["notification"],
     help='Alerts to use (specify at least once)'
 )
-def main(detector: str, alert: list[str]):
+@click.option(
+    '--camera',
+    type=int,
+    default=0,
+    help='Camera index'
+)
+def main(detector: str, alert: list[str], camera: int):
     """Nailguard launcher"""
     
     detectors = [get_detector(detector) for detector in detector]
     alerts = [get_alert(alert) for alert in alert]
-    Nailguard(detectors, alerts).run()
+    Nailguard(camera, detectors, alerts).run()
