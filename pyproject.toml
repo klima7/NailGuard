@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nailguard"
-version = "0.1.0"
+version = "0.1.1"
 description = "Making sure you don't bite your nails"
 authors = ["klima7 <github@mail.ukasz.com>"]
 readme = "README.md"
@@ -14,6 +14,7 @@ pillow = "^11.0.0"
 numpy = "<2"
 click = "^8.1.7"
 beepy = "^1.0.7"
+notify-py = "^0.3.43"
 
 [tool.poetry.scripts]
 nailguard = "nailguard.main:main"
