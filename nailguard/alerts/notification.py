@@ -1,4 +1,5 @@
 from pathlib import Path
+from time import sleep
 
 from notifypy import Notify
 
@@ -18,3 +19,4 @@ class NotificationAlert(Alert):
         notification.icon = self.icon_path
 
         notification.send()
+        sleep(5)

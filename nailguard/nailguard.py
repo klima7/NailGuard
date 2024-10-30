@@ -34,6 +34,9 @@ class Nailguard:
             threading.Thread(target=self._detector_thread, args=(self, detector)).start()
             
         threading.Thread(target=self._master_detector_thread, args=(self,)).start()
+        
+        for alert in self.alerts:
+            threading.Thread(target=self._alert_thread, args=(self, alert)).start()
 
     @staticmethod
     def _image_thread(nailguard) -> None:
@@ -65,5 +68,11 @@ class Nailguard:
                 detected_count += 1
             else:
                 detected_count = 0
-            nailguard.master_detected = detected_count >= nailguard.debounce / 0.1
+            nailguard.master_detected = detected_count > nailguard.debounce / 0.1
             sleep(0.1)
+
+    @staticmethod
+    def _alert_thread(nailguard, alert: Alert) -> None:
+        while True:
+            if nailguard.master_detected:
+                alert.fire()
