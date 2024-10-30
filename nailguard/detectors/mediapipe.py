@@ -41,14 +41,15 @@ class MediapipeDetector(Detector):
             position = None
             size = None
             
-            for detection in face_result.detections:
-                bbox = detection.location_data.relative_bounding_box
-                area = bbox.width * bbox.height
-                if area > max_area:
-                    max_area = area
-                    pos = detection.location_data.relative_keypoints[3]
-                    position = (int(pos.x*image.width), int(pos.y*image.height))
-                    size = int(bbox.width * image.width)
+            if face_result.detections:
+                for detection in face_result.detections:
+                    bbox = detection.location_data.relative_bounding_box
+                    area = bbox.width * bbox.height
+                    if area > max_area:
+                        max_area = area
+                        pos = detection.location_data.relative_keypoints[3]
+                        position = (int(pos.x*image.width), int(pos.y*image.height))
+                        size = int(bbox.width * image.width)
                     
         return position, size
 

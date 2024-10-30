@@ -10,16 +10,20 @@ class Nailguard:
     
     def __init__(
         self,
-        camera_idx: int,
         detectors: list[Detector],
-        alerts: list[Alert]
+        alerts: list[Alert],
+        camera_idx: int,
+        trigger_count: int,
+        debounce: float
     ) -> None:
-        self.camera_idx = camera_idx
         self.detectors = detectors
         self.alerts = alerts
+        self.camera_idx = camera_idx
+        self.trigger_count = trigger_count
+        self.debounce = debounce
         
         self.image = None
-        self.bite_statuses = {detector: False for detector in detectors}
+        self.detected = {detector: False for detector in detectors}
     
     def run(self) -> None:
         threading.Thread(target=self._image_thread, args=(self,)).start()
@@ -45,5 +49,5 @@ class Nailguard:
                 continue
             
             bite = detector.detect(nailguard.image)
-            nailguard.bite_statuses[detector] = bite
+            nailguard.detected[detector] = bite
             print(bite)
