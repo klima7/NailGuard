@@ -1,4 +1,5 @@
 import threading
+from time import sleep
 
 import cv2
 from PIL import Image
@@ -23,13 +24,16 @@ class Nailguard:
         self.debounce = debounce
         
         self.image = None
-        self.detected = {detector: False for detector in detectors}
+        self.current_detected = {detector: False for detector in detectors}
+        self.master_detected = False
     
     def run(self) -> None:
         threading.Thread(target=self._image_thread, args=(self,)).start()
         
         for detector in self.detectors:
             threading.Thread(target=self._detector_thread, args=(self, detector)).start()
+            
+        threading.Thread(target=self._master_detector_thread, args=(self,)).start()
 
     @staticmethod
     def _image_thread(nailguard) -> None:
@@ -49,5 +53,17 @@ class Nailguard:
                 continue
             
             bite = detector.detect(nailguard.image)
-            nailguard.detected[detector] = bite
+            nailguard.current_detected[detector] = bite
             print(bite)
+
+    @staticmethod
+    def _master_detector_thread(nailguard) -> None:
+        detected_count = 0
+        while True:
+            detected = all(nailguard.current_detected.values())
+            if detected:
+                detected_count += 1
+            else:
+                detected_count = 0
+            nailguard.master_detected = detected_count >= nailguard.debounce / 0.1
+            sleep(0.1)
