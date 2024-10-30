@@ -7,6 +7,10 @@ from nailguard.detectors import Detector
 from nailguard.alerts import Alert
 
 
+MASTER_DETECTOR_PERIOD = 0.1
+IMAGE_READ_FPS = 30
+
+
 class Nailguard:
     
     def __init__(
@@ -48,6 +52,7 @@ class Nailguard:
             
             image = Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
             nailguard.image = image
+            sleep(1 / IMAGE_READ_FPS)
         
     @staticmethod
     def _detector_thread(nailguard, detector: Detector) -> None:
@@ -55,9 +60,8 @@ class Nailguard:
             if nailguard.image is None:
                 continue
             
-            bite = detector.detect(nailguard.image)
-            nailguard.current_detected[detector] = bite
-            print(bite)
+            detected = detector.detect(nailguard.image)
+            nailguard.current_detected[detector] = detected
 
     @staticmethod
     def _master_detector_thread(nailguard) -> None:
@@ -68,8 +72,8 @@ class Nailguard:
                 detected_count += 1
             else:
                 detected_count = 0
-            nailguard.master_detected = detected_count > nailguard.debounce / 0.1
-            sleep(0.1)
+            nailguard.master_detected = detected_count > nailguard.debounce / MASTER_DETECTOR_PERIOD
+            sleep(MASTER_DETECTOR_PERIOD)
 
     @staticmethod
     def _alert_thread(nailguard, alert: Alert) -> None:
