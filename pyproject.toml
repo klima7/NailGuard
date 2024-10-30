@@ -13,6 +13,7 @@ opencv-python = "^4.10.0.84"
 pillow = "^11.0.0"
 numpy = "<2"
 click = "^8.1.7"
+beepy = "^1.0.7"
 
 [tool.poetry.scripts]
 nailguard = "nailguard.main:main"
