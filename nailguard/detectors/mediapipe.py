@@ -1,9 +1,9 @@
-from .base import Detector
-
 from PIL import Image
 import mediapipe as mp
 import cv2
 import numpy as np
+
+from .base import Detector
 
 
 class MediapipeDetector(Detector):

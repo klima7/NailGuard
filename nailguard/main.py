@@ -2,6 +2,7 @@ import click
 
 from nailguard.detectors import get_detectors_names, get_detector
 from nailguard.alerts import get_alerts_names, get_alert
+from nailguard.nailguard import Nailguard
 
 
 @click.command()
@@ -24,3 +25,4 @@ def main(detector: str, alert: list[str]):
     
     detectors = [get_detector(detector) for detector in detector]
     alerts = [get_alert(alert) for alert in alert]
+    Nailguard(detectors, alerts).run()
