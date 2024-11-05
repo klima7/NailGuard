@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nailguard"
-version = "0.1.2"
+version = "0.2.0"
 description = "Making sure you don't bite your nails"
 authors = ["klima7 <github@mail.ukasz.com>"]
 readme = "README.md"
