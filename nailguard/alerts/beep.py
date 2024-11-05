@@ -16,8 +16,8 @@ class BeepAlert(Alert):
     
     def on_start(self):
         self.sound.play()
-        sleep(1.0)
+        sleep(0.5)
     
     def on_active(self):
         self.sound.play()
-        sleep(1.0)
+        sleep(0.5)
