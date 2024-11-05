@@ -1,10 +1,12 @@
 from .base import Alert
 from .notification import NotificationAlert
 from .beep import BeepAlert
+from .screen import ScreenAlert
 
 alerts = {
     "notification": NotificationAlert,
     "beep": BeepAlert,
+    "screen": ScreenAlert,
 }
 
 
