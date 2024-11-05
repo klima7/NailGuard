@@ -17,7 +17,7 @@ from nailguard.nailguard import Nailguard
     "--alert",
     type=click.Choice(get_alerts_names()),
     multiple=True,
-    default=["notification", "beep"],
+    default=["beep"],
     help="Alerts to use. Defaults to notification, beep."
 )
 @click.option(
