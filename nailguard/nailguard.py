@@ -7,8 +7,9 @@ from nailguard.detectors import Detector
 from nailguard.alerts import Alert
 
 
-MASTER_DETECTOR_PERIOD = 0.1
-IMAGE_READ_FPS = 10
+IMAGE_READ_FPS = 5
+ALERT_CHECK_FPS = 10
+MASTER_DETECTOR_FPS = 10
 
 
 class Nailguard:
@@ -59,12 +60,12 @@ class Nailguard:
         while True:
             if nailguard.image is None:
                 continue
-            
             detected = detector.detect(nailguard.image)
             nailguard.current_detected[detector] = detected
 
     @staticmethod
     def _master_detector_thread(nailguard) -> None:
+        master_detector_period = 1 / MASTER_DETECTOR_FPS
         detected_count = 0
         while True:
             detected = all(nailguard.current_detected.values())
@@ -72,11 +73,14 @@ class Nailguard:
                 detected_count += 1
             else:
                 detected_count = 0
-            nailguard.master_detected = detected_count > nailguard.debounce / MASTER_DETECTOR_PERIOD
-            sleep(MASTER_DETECTOR_PERIOD)
+            nailguard.master_detected = detected_count > nailguard.debounce / master_detector_period
+            sleep(master_detector_period)
 
     @staticmethod
     def _alert_thread(nailguard, alert: Alert) -> None:
+        sleep_time = 1 / ALERT_CHECK_FPS
         while True:
             if nailguard.master_detected:
                 alert.fire()
+            else:
+                sleep(sleep_time)

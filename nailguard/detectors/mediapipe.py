@@ -2,7 +2,6 @@ from time import sleep
 
 from PIL import Image
 import mediapipe as mp
-import cv2
 import numpy as np
 
 from .base import Detector
@@ -11,12 +10,12 @@ from .base import Detector
 class MediapipeDetector(Detector):
     
     def detect(self, image: Image) -> bool:
+        sleep(0.5)
         fingertips_positions = self._get_fingertips_positions(image)
         mouth_position, mouth_size = self._get_mouth_position_and_size(image)
         if mouth_position is None:
             return False
         closest_distance = self._get_closest_distance(fingertips_positions, mouth_position)
-        sleep(0.3)
         return closest_distance < mouth_size / 4
 
     def _get_fingertips_positions(self, image: Image):
