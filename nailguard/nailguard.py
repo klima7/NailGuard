@@ -8,7 +8,7 @@ from nailguard.alerts import Alert
 
 
 MASTER_DETECTOR_PERIOD = 0.1
-IMAGE_READ_FPS = 30
+IMAGE_READ_FPS = 10
 
 
 class Nailguard:
