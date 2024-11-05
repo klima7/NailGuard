@@ -22,7 +22,7 @@ class MediapipeDetector(Detector):
         )
     
     def detect(self, image: Image) -> bool:
-        sleep(0.5)
+        sleep(0.2)
         with open(os.devnull, 'w') as fnull:
             with redirect_stdout(fnull), redirect_stderr(fnull):
                 fingertips_positions = self._get_fingertips_positions(image)
