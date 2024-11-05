@@ -80,7 +80,6 @@ class Nailguard:
     def _alert_thread(nailguard, alert: Alert) -> None:
         sleep_time = 1 / ALERT_CHECK_FPS
         while True:
-            if nailguard.master_detected:
-                alert.fire()
-            else:
+            alert.handle(nailguard.master_detected)
+            if not nailguard.master_detected:
                 sleep(sleep_time)

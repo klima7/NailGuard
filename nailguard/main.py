@@ -17,8 +17,8 @@ from nailguard.nailguard import Nailguard
     "--alert",
     type=click.Choice(get_alerts_names()),
     multiple=True,
-    default=["notification"],
-    help="Alerts to use. Defaults to notification."
+    default=["notification", "beep"],
+    help="Alerts to use. Defaults to notification, beep."
 )
 @click.option(
     "--camera",
@@ -35,8 +35,8 @@ from nailguard.nailguard import Nailguard
 @click.option(
     "--debounce",
     type=float,
-    default=0.5,
-    help="Number of second to wait before firing alert. Defaults to 0.5"
+    default=1.0,
+    help="Number of second to wait before firing alert. Defaults to 1.0"
 )
 def main(detector: str, alert: list[str], camera: int, trigger: int, debounce: float):
     """Nailguard launcher"""
